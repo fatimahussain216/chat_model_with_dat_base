@@ -13,7 +13,7 @@ import streamlit as st
 from huggingface_hub import InferenceClient
 
 
-client = InferenceClient(token=st.st.secrets["HUGGING_FACE_API_KEY"])
+client = InferenceClient(token=st.secrets["HUGGING_FACE_API_KEY"])
 
 # database
 conn = sqlite3.connect("chat_memory.db", check_same_thread=False)
