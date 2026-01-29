@@ -55,7 +55,7 @@ def chatbot(query: str) -> str:
 
     return answer
 
-st.title("AI Job Assistant 💼")
+st.title("AI Job Assistant ")
 user_input = st.text_input("Ask me anything about AI jobs:")
 
 if user_input:
