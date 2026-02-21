@@ -18,7 +18,7 @@ except Exception as e:
     st.error(f"Error while taking API key input: {e}")
     api_key = None
 
-client = InferenceClient(token=st.secrets["HUGGING_FACE_API_KEY"])
+client = InferenceClient(token=api_key)
 
 
 # database
