@@ -15,7 +15,7 @@ from huggingface_hub import InferenceClient
 st.title("🤖 AI Chatbot")
 st.header("gpt-2 model use in chat bot")
 
-api_key = st.text_input("Enter your Hugging Face API Key:", type="password")
+api_key = st.text_input("Enter your Free Hugging Face API Key:", type="password")
 
 
 user_input = st.text_input("Ask me anything:")
