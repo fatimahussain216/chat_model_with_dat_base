@@ -12,14 +12,33 @@ import sqlite3
 import streamlit as st
 from huggingface_hub import InferenceClient
 
-try:
-    api_key = st.text_input("Enter your Hugging Face API Key:", type="password")
-except Exception as e:
-    st.error(f"Error while taking API key input: {e}")
-    api_key = None
+st.title("🤖 AI Chatbot")
 
-client = InferenceClient(token=api_key)
 
+api_key = st.text_input("Enter your Hugging Face API Key:", type="password")
+
+
+user_input = st.text_input("Ask me anything:")
+
+if user_input:
+    if not api_key:
+        st.error("⚠️ Please enter your API key first.")
+    else:
+        try:
+            client = InferenceClient(token=api_key)
+
+            response = client.text_generation(
+                model="gpt2",
+                prompt=user_input,
+                max_new_tokens=50
+            )
+
+            st.success("Response:")
+            st.write(response)
+
+        except Exception as e:
+            st.error("Something went wrong. Check your API key.")
+            st.exception(e)
 
 # database
 conn = sqlite3.connect("chat_memory.db", check_same_thread=False)
@@ -47,7 +66,7 @@ def chatbot(query: str) -> str:
     # Combine with current query
     final_prompt = prompt_history + f"User: {query}\nBot:"
 
-    # Call Hugging Face model
+    
     response = client.chat_completion(
         model="Qwen/Qwen2.5-7B-Instruct",
         messages=[{"role": "user", "content": final_prompt}]
@@ -61,23 +80,3 @@ def chatbot(query: str) -> str:
 
     return answer
 
-st.title("🤖 AI Chatbot")
-
-# API Key Input
-
-
-# User Question
-user_input = st.text_input("Ask me anything:")
-
-if user_input:
-    if not api_key:
-        st.error("⚠️ Please enter your API key first.")
-    else:
-        
-
-            st.success("Response:")
-            st.write(response)
-
-        except Exception as e:
-            st.error("Something went wrong. Check your API key.")
-            st.exception(e)
