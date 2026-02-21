@@ -12,8 +12,14 @@ import sqlite3
 import streamlit as st
 from huggingface_hub import InferenceClient
 
+try:
+    api_key = st.text_input("Enter your Hugging Face API Key:", type="password")
+except Exception as e:
+    st.error(f"Error while taking API key input: {e}")
+    api_key = None
 
 client = InferenceClient(token=st.secrets["HUGGING_FACE_API_KEY"])
+
 
 # database
 conn = sqlite3.connect("chat_memory.db", check_same_thread=False)
@@ -56,7 +62,7 @@ def chatbot(query: str) -> str:
     return answer
 
 st.title("AI Job Assistant ")
-user_input = st.text_input("Ask me anything about AI jobs:")
+user_input = st.text_input("Ask me anything ")
 
 if user_input:
     answer = chatbot(user_input)
