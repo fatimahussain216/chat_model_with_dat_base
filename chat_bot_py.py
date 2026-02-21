@@ -61,9 +61,23 @@ def chatbot(query: str) -> str:
 
     return answer
 
-st.title("AI Job Assistant ")
-user_input = st.text_input("Ask me anything ")
+st.title("🤖 AI Chatbot")
+
+# API Key Input
+
+
+# User Question
+user_input = st.text_input("Ask me anything:")
 
 if user_input:
-    answer = chatbot(user_input)
-    st.write(answer)
+    if not api_key:
+        st.error("⚠️ Please enter your API key first.")
+    else:
+        
+
+            st.success("Response:")
+            st.write(response)
+
+        except Exception as e:
+            st.error("Something went wrong. Check your API key.")
+            st.exception(e)
